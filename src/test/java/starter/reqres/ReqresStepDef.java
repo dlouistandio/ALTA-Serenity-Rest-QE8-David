@@ -17,7 +17,7 @@ public class ReqresStepDef {
     @Steps
     ReqresAPI reqresAPI;
 
-    /*Get list user*/
+    //GET LIST USERS
     @Given("Get list user with page {int}")
     public void getListUserWithPage(int page) {
         reqresAPI.getListUsers(page);
@@ -38,7 +38,7 @@ public class ReqresStepDef {
         SerenityRest.then().body("page", equalTo(page));
     }
 
-    /*Post user*/
+    //POST USER
     @Given("Post create user with valid json")
     public void postCreateUserWithValidJson() {
         File json = new File(ReqresAPI.JSON_REQUEST+"RequestUser.json");
@@ -56,5 +56,30 @@ public class ReqresStepDef {
         SerenityRest.then()
                 .body("name", equalTo(name))
                 .body("job", equalTo(job));
+    }
+
+    //PUT UPDATE USER
+    @Given("Put update user with valid json and {int}")
+    public void putUpdateUserWithValidJson(int id) {
+        File json = new File(ReqresAPI.JSON_REQUEST+"RequestUser.json");
+        reqresAPI.putUpdateUser(id,json);
+    }
+
+    @When("Send request put update user")
+    public void sendRequestPutUpdateUser() {
+        SerenityRest.when()
+                .put(ReqresAPI.PUT_UPDATE_USER);
+    }
+
+    //DELETE USER
+    @Given("Delete user with valid id {int}")
+    public void deleteUserWithValidIdId(int id) {
+        reqresAPI.deleteUser(id);
+    }
+
+    @When("Send request delete user")
+    public void sendRequestDeleteUser() {
+        SerenityRest.when()
+                .delete(ReqresAPI.DELETE_USER);
     }
 }
