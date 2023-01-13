@@ -3,6 +3,8 @@ package starter.reqres;
 import io.restassured.http.ContentType;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
+import starter.reqres.Utils.Constant;
+import starter.reqres.Utils.ReqresResponses;
 
 import java.io.File;
 
@@ -11,6 +13,7 @@ public class ReqresAPI {
     public static String BASE_URL = "https://reqres.in";
     public static final String DIR = System.getProperty("user.dir");
     public static String JSON_REQUEST = DIR+"/src/test/resources/JSON/Request/";
+    public static String JSON_SCHEMA = DIR+"/src/test/resources/JSON/JsonSchema/";
 
     public static String GET_LIST_USERS = BASE_URL+"/api/users?page={page}"; /*{page} dipanggil pada .pathParam di step*/
     public static String POST_CREATE_USERS = BASE_URL+"/api/users";
@@ -20,8 +23,21 @@ public class ReqresAPI {
     @Step("Get list users")
     public void getListUsers(int page){
         SerenityRest.given()
-                .pathParam("page", page);
+                .pathParam(ReqresResponses.PAGE, page);
     }
+
+    @Step("Get list users")
+    public void getListUsersId(int id){
+        SerenityRest.given()
+                .pathParam(ReqresResponses.ID, id);
+    }
+
+    @Step("Get list users")
+    public void invalidGetListUsersId(String page){
+        SerenityRest.given()
+                .pathParam(ReqresResponses.PAGE, page);
+    }
+
     @Step("Post create users")
     public void postCreateUsers(File json){
         SerenityRest.given()
@@ -32,7 +48,7 @@ public class ReqresAPI {
     @Step("Put update users")
     public void putUpdateUser(int id, File json){
         SerenityRest.given()
-                .pathParam("id",id)
+                .pathParam(ReqresResponses.ID,id)
                 .contentType(ContentType.JSON)
                 .body(json);
     }
@@ -40,7 +56,7 @@ public class ReqresAPI {
     @Step("Delete users")
     public void deleteUser(int id){
         SerenityRest.given()
-                .pathParam("id",id);
+                .pathParam(ReqresResponses.ID,id);
     }
 
 }

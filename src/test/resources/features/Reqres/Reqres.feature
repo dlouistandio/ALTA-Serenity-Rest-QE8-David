@@ -37,3 +37,14 @@ Feature: Testing Reqres API
       | id |
       | 1  |
       | 2  |
+
+  Scenario Outline: Get list users with valid parameter pages
+    Given Get list user with page <page>
+    When Send request get list user
+    Then Should return status code 200
+    And Response body should be <page>
+    And validate json schema list user
+    Examples:
+      | page |
+      | 1    |
+      | 2    |
