@@ -16,6 +16,7 @@ public class ReqresAPI {
     public static String JSON_SCHEMA = DIR+"/src/test/resources/JSON/JsonSchema/";
 
     public static String GET_LIST_USERS = BASE_URL+"/api/users?page={page}"; /*{page} dipanggil pada .pathParam di step*/
+    public static String GET_SINGLE_USERS = BASE_URL+ "/api/users/{id}";
     public static String POST_CREATE_USERS = BASE_URL+"/api/users";
     public static String PUT_UPDATE_USER = BASE_URL+"/api/users/{id}";
     public static String DELETE_USER = BASE_URL+"/api/users/{id}";
@@ -24,6 +25,7 @@ public class ReqresAPI {
     public void getListUsers(int page){
         SerenityRest.given()
                 .pathParam(ReqresResponses.PAGE, page);
+
     }
 
     @Step("Get list users")

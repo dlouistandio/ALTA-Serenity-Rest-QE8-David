@@ -61,7 +61,7 @@ public class ListUserStepDef {
         SerenityRest.when().get(ReqresAPI.GET_LIST_USERS);
     }
 
-    @Given("Get list user with invalid id {string}")
+    @Given("Get list user with invalid page {string}")
     public void getListUserWithInvalidId(String id) {
         reqresAPI.invalidGetListUsersId(id);
     }

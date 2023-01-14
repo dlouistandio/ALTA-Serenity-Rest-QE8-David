@@ -33,10 +33,10 @@ Feature: Get List Users Reqres API
        | 6523 |
 
    Scenario Outline: Get list user with invalid path
-     Given Get list user with invalid id "<id>"
+     Given Get list user with invalid page "<page>"
      When Send request get user
      Then Should return status code 404
      Examples:
-       | id         |
+       | page       |
        | qwewqewqew |
        | &%*!&(@(^  |
