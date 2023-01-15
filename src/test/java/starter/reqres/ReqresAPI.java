@@ -21,6 +21,12 @@ public class ReqresAPI {
     public static String PUT_UPDATE_USER = BASE_URL+"/api/users/{id}";
     public static String DELETE_USER = BASE_URL+"/api/users/{id}";
 
+    @Step("Get single user")
+    public void getSingleUser(int id){
+        SerenityRest.given()
+                .pathParam(ReqresResponses.ID, id);
+    }
+
     @Step("Get list users")
     public void getListUsers(int page){
         SerenityRest.given()
@@ -28,8 +34,9 @@ public class ReqresAPI {
 
     }
 
+
     @Step("Get list users")
-    public void getListUsersId(int id){
+    public void invalidGetSingleUserId(String id){
         SerenityRest.given()
                 .pathParam(ReqresResponses.ID, id);
     }

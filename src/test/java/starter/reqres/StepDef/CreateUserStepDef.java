@@ -13,6 +13,7 @@ import java.io.File;
 import static org.hamcrest.Matchers.equalTo;
 
 public class CreateUserStepDef {
+    @Steps
     ReqresAPI reqresAPI;
 
     //PUT UPDATE USER
@@ -28,9 +29,4 @@ public class CreateUserStepDef {
                 .put(ReqresAPI.PUT_UPDATE_USER);
     }
 
-    @Then("Should return status code {int}")
-    public void shouldReturnStatusCode(int ok) {
-        SerenityRest.then().statusCode(ok);
-
-    }
 }

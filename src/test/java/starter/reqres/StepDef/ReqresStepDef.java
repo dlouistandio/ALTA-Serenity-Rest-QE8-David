@@ -18,27 +18,10 @@ public class ReqresStepDef {
     @Steps
     ReqresAPI reqresAPI;
 
-    //POST USER
-    @Given("Post create user with valid json")
-    public void postCreateUserWithValidJson() {
-        File json = new File(ReqresAPI.JSON_REQUEST+"RequestUser.json");
-        reqresAPI.postCreateUsers(json);
+    @Then("Should return status code {int}")
+    public void shouldReturnStatusCode(int ok) {
+        SerenityRest.then().statusCode(ok);
     }
-
-    @When("Send request post create user")
-    public void sendRequestPostCreateUser() {
-        SerenityRest.when()
-                .post(ReqresAPI.POST_CREATE_USERS);
-    }
-
-    @And("Response body name should be {string} and job should be {string}")
-    public void responseBodyNameShouldBeAndJobShouldBe(String name, String job) {
-        SerenityRest.then()
-                .body("name", equalTo(name))
-                .body("job", equalTo(job));
-    }
-
-    //DELETE USER
 
     //Validate json schmea
     @And("validate json schema list user")
@@ -46,4 +29,6 @@ public class ReqresStepDef {
         File jsonSchema = new File(ReqresAPI.JSON_SCHEMA+"ListUserSchema.json");
         SerenityRest.then().assertThat().body(JsonSchemaValidator.matchesJsonSchema(jsonSchema));
     }
+
+
 }

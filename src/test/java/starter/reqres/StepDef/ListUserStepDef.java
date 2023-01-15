@@ -16,9 +16,9 @@ import java.io.File;
 import static org.hamcrest.Matchers.equalTo;
 
 public class ListUserStepDef {
-    //GET LIST USERS
     @Steps
-    ReqresAPI reqresAPI = new ReqresAPI();
+    ReqresAPI reqresAPI;
+
     @Given("Get list user with page {int}")
     public void getListUserWithPage(int page) {
         reqresAPI.getListUsers(page);
@@ -27,11 +27,6 @@ public class ListUserStepDef {
     @When("Send request get list user")
     public void sendRequestGetListUser() {
         SerenityRest.when().get(ReqresAPI.GET_LIST_USERS);
-    }
-
-    @Then("Should return status code {int}")
-    public void shouldReturnStatusCode(int ok) {
-        SerenityRest.then().statusCode(ok);
     }
 
     @And("Response body should be {int}")
@@ -65,4 +60,43 @@ public class ListUserStepDef {
     public void getListUserWithInvalidId(String id) {
         reqresAPI.invalidGetListUsersId(id);
     }
+
+    @When("Send request get invalid user")
+    public void sendRequestGetInvalidUser() {
+        SerenityRest.when().get(ReqresAPI.GET_SINGLE_USERS);
+    }
+
+    @When("Send request get single user")
+    public void sendRequestGetSingleUser() {
+        SerenityRest.when().get(ReqresAPI.GET_SINGLE_USERS);
+    }
+
+
+    @Given("Get list user with unregistered id {int}")
+    public void getListUserWithUnregisteredIdId(int id) {
+        reqresAPI.getSingleUser(id);
+    }
+
+    @And("validate json schema single user")
+    public void validateJsonSchemaSingleUser() {
+        File jsonSchema = new File(Constant.JSON_SCHEMA+"SingleUserSchema.json");
+        SerenityRest.then().assertThat().body(JsonSchemaValidator.matchesJsonSchema(jsonSchema));
+    }
+
+    @And("Response body id should be {int}")
+    public void responseBodyIdShouldBeId(int id) {
+        SerenityRest.then().body(ReqresResponses.SINGLE,equalTo(id));
+    }
+
+    @Given("Get single user with id {int}")
+    public void getSingleUserWithIdId(int id) {
+        reqresAPI.getSingleUser(id);
+    }
+
+
+    @Given("Get single user with invalid id {string}")
+    public void getSingleUserWithInvalid(String id) {
+        reqresAPI.invalidGetSingleUserId(id);
+    }
+
 }
