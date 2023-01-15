@@ -1,4 +1,4 @@
-@GetFeature
+@Tugas
 Feature: Get List Users Reqres API
 
   Scenario Outline: Get list users with valid parameter page
@@ -12,7 +12,7 @@ Feature: Get List Users Reqres API
       |1   |
       |2   |
 
-  Scenario Outline: Get list user with invalid page
+  Scenario Outline: Get list user with invalid parameter page
     Given Get list user with invalid page "<page>"
     When Send request get user
     Then Should return status code 404

@@ -4,6 +4,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.module.jsv.JsonSchemaValidator;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Steps;
 import starter.reqres.ReqresAPI;
@@ -18,23 +19,39 @@ public class UpdateUserStepDef {
     @Steps
     ReqresAPI reqresAPI;
 
-    @Given("Post create user with valid json")
-    public void postCreateUserWithValidJson() {
-        File json = new File(ReqresAPI.JSON_REQUEST+"RequestUser.json");
-        reqresAPI.postCreateUsers(json);
+    @Given("Put update user with valid json and id {int}")
+    public void putUpdateUserWithValidJson(int id) {
+        File json = new File(ReqresAPI.JSON_REQUEST + "RequestUser.json");
+        reqresAPI.putUpdateUser(id, json);
     }
 
-    @When("Send request post create user")
-    public void sendRequestPostCreateUser() {
+    @When("Send request put update user")
+    public void sendRequestPutUpdateUser() {
         SerenityRest.when()
-                .post(ReqresAPI.POST_CREATE_USERS);
+                .put(ReqresAPI.PUT_UPDATE_USER);
     }
 
-    @And("Response body name should be {string} and job should be {string}")
-    public void responseBodyNameShouldBeAndJobShouldBe(String name, String job) {
-        SerenityRest.then()
-                .body(ReqresResponses.NAME, equalTo(name))
-                .body(ReqresResponses.JOB, equalTo(job));
+    @And("Validate json schema update user")
+    public void validateJsonSchemaUpdateUser() {
+        File jsonSchema = new File(Constant.JSON_SCHEMA+"UpdateUserSchema.json");
+        SerenityRest.then().assertThat().body(JsonSchemaValidator.matchesJsonSchema(jsonSchema));
     }
 
+    @Given("Put update user with invalid json and valid id {int}")
+    public void putUpdateUserWithInvalidJsonAndId(int id) {
+        File json = new File(ReqresAPI.JSON_REQUEST+"InvalidReqUser.json");
+        reqresAPI.putUpdateUser(id ,json);
+    }
+
+    @Given("Put update user with valid json and invalid id {string}")
+    public void putUpdateUserWithValidJsonAndInvalidId(String id) {
+        File json = new File(ReqresAPI.JSON_REQUEST+"RequestUser.json");
+        reqresAPI.putInvalidUpdateUser(id ,json);
+    }
+
+    @Given("Put update user with empty json key and valid id {int}")
+    public void putUpdateUserWithEmptyJsonKeyAndValidId(int id) {
+        File json = new File(ReqresAPI.JSON_REQUEST+"EmptyKeyUser.json");
+        reqresAPI.putUpdateUser(id ,json);
+    }
 }

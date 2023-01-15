@@ -6,4 +6,5 @@ public class ReqresResponses {
     public static String JOB = "job";
     public static String ID = "id";
     public static String SINGLE = "data.id";
+    public static String EMPTY = "";
 }

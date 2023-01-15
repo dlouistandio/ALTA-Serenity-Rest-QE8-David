@@ -22,5 +22,25 @@ public class DeleteUserStepDef {
                 .delete(ReqresAPI.DELETE_USER);
     }
 
+    @When("Send request delete user with empty id")
+    public void sendRequestEmptyDeleteUser() {
+        SerenityRest.when()
+                .delete(ReqresAPI.EMPTY_DELETE_USER);
+    }
 
+
+    @Given("Delete user with invalid id {string}")
+    public void deleteUserWithInvalidId(String id) {
+        reqresAPI.invalidDeleteUser(id);
+    }
+
+    @Given("Delete user with unregistered {int}")
+    public void deleteUserWithUnregisteredId(int id) {
+        reqresAPI.deleteUser(id);
+    }
+
+    @Given("Delete user without parameter id")
+    public void deleteUserWithoutParameter() {
+        reqresAPI.emptyParamDeleteUser();
+    }
 }
